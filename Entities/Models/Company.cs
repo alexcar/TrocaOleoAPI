@@ -47,5 +47,6 @@ namespace Entities.Models
         public string? ZipCode { get; set; }        
         
         public ICollection<Infrastructure>? Infrastructures { get; set; } = new List<Infrastructure>();
+        public ICollection<Service>? Services { get; set; } = new List<Service>();
     }
 }

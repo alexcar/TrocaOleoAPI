@@ -22,5 +22,8 @@ namespace Repository
         
 
         public void CreateProductManufacturer(ProductManufacturer productManufacturer) => Create(productManufacturer);
+
+        public void DeleteProductManufacturer(ProductManufacturer productManufacturer) => Delete(productManufacturer);
+        
     }
 }

@@ -8,5 +8,6 @@ namespace Service.Contracts
         IEnumerable<ProductDto> GetAll(Guid productManufacturerId, bool trackChanges);
         ProductDto CreateProductForProductManufacturer(
             Guid productManufacturerId, ProductForCreationDto productForCreation, bool trackChanges);
+        void DeleteProductForProductManufacturer(Guid productManufacturerId, Guid id, bool trackChanges);
     }
 }

@@ -23,5 +23,8 @@ namespace Repository
             product.ProductManufacturerId = productManufacturerId;
             Create(product);
         }
+
+        public void DeleteProduct(Product product) => Delete(product);
+        
     }
 }

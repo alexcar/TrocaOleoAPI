@@ -8,5 +8,6 @@ namespace Contracts
         IEnumerable<ProductManufacturer> GetAll(bool trackChanges);
         IEnumerable<ProductManufacturer> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
         void CreateProductManufacturer(ProductManufacturer productManufacturer);
+        void DeleteProductManufacturer(ProductManufacturer productManufacturer);
     }
 }

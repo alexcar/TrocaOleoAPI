@@ -90,5 +90,16 @@ namespace Service
 
             return pmToReturn;
         }
+
+        public void DeleteProductManufacturer(Guid id, bool trackChanges)
+        {
+            var pm = _repository.ProductManufacturer.Get(id, trackChanges);
+
+            if (pm is null)
+                throw new ProductManufacturerNotFoundException(id);
+
+            _repository.ProductManufacturer.DeleteProductManufacturer(pm);
+            _repository.Save();
+        }
     }
 }

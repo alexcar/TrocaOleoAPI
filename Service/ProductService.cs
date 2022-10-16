@@ -69,5 +69,21 @@ namespace Service
 
             return productToReturn;
         }
+
+        public void DeleteProductForProductManufacturer(Guid productManufacturerId, Guid id, bool trackChanges)
+        {
+            var productManufacturer = _repository.ProductManufacturer.Get(productManufacturerId, trackChanges);
+
+            if (productManufacturer is null)
+                throw new ProductManufacturerNotFoundException(productManufacturerId);
+
+            var productForProductManufacturer = _repository.Product.GetById(productManufacturerId, id, trackChanges);
+
+            if (productForProductManufacturer is null)
+                throw new ProductNotFoundException(id);
+
+            _repository.Product.DeleteProduct(productForProductManufacturer);
+            _repository.Save();
+        }
     }
 }

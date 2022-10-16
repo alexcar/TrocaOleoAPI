@@ -44,5 +44,13 @@ namespace TrocaOleo.Presentation.Controllers
             return CreatedAtRoute("GetProductForManufacturer", 
                 new { productManufacturerId, id = productToReturn.Id }, productToReturn);
         }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteProductForProductmanufacturer(Guid productmanufacturerId, Guid id)
+        {
+            _service.ProductService.DeleteProductForProductManufacturer(productmanufacturerId, id, trackChanges: false);
+
+            return NoContent();
+        }
     }
 }

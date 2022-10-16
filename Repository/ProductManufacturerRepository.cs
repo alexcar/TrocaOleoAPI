@@ -16,6 +16,11 @@ namespace Repository
         public IEnumerable<ProductManufacturer> GetAll(bool trackChanges) =>
             FindAll(trackChanges)
                 .OrderBy(p => p.Name).ToList();
+
+        public IEnumerable<ProductManufacturer> GetByIds(IEnumerable<Guid> ids, bool trackChanges) =>
+            FindByCondition(x => ids.Contains(x.Id), trackChanges).ToList();
         
+
+        public void CreateProductManufacturer(ProductManufacturer productManufacturer) => Create(productManufacturer);
     }
 }

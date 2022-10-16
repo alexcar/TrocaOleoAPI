@@ -17,5 +17,11 @@ namespace Repository
         public IEnumerable<Product> GetAll(Guid productManufacturerId, bool trackChanges) =>
             FindByCondition(pm => pm.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
                 .OrderBy(p => p.Name).ToList();
+
+        public void CreateProductForProductManufacturer(Guid productManufacturerId, Product product)
+        {
+            product.ProductManufacturerId = productManufacturerId;
+            Create(product);
+        }
     }
 }

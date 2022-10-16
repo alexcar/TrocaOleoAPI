@@ -6,5 +6,9 @@ namespace Service.Contracts
     {
         IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges);
         CompanyDto? GetCompany(Guid id, bool trackChanges);
+        IEnumerable<CompanyDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
+        (IEnumerable<CompanyDto> companies, string ids) CreateCompanyCollection(
+            IEnumerable<CompanyForCreationDto> companyCollection);
+        CompanyDto CreateCompany(CompanyForCreationDto company);
     }
 }

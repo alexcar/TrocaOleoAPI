@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -47,6 +48,26 @@ namespace Service
             var productDto = _mapper.Map<ProductDto>(product);
 
             return productDto;
+        }
+
+        public ProductDto CreateProductForProductManufacturer(
+            Guid productManufacturerId, ProductForCreationDto productForCreation, bool trackChanges)
+        {
+            var productManufacturer = _repository.ProductManufacturer.Get(productManufacturerId, trackChanges);
+
+            if (productManufacturer is null)
+                throw new ProductManufacturerNotFoundException(productManufacturerId);
+
+            var productEntity = _mapper.Map<Product>(productForCreation);
+
+            productEntity.CreationDate = DateTime.Now;
+            
+            _repository.Product.CreateProductForProductManufacturer(productManufacturerId, productEntity);            
+            _repository.Save();
+
+            var productToReturn = _mapper.Map<ProductDto>(productEntity);
+
+            return productToReturn;
         }
     }
 }

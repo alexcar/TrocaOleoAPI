@@ -3,6 +3,7 @@ using NLog;
 using Repository;
 using Microsoft.EntityFrameworkCore;
 using Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,12 @@ var configuration = new ConfigurationBuilder()
 builder.Services.AddDbContext<RepositoryContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("sqlConnection"));
+});
+
+// suppressing a default model state validation
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
 });
 
 builder.Services.AddControllers()

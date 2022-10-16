@@ -13,6 +13,8 @@ namespace TrocaoOleoAPI
                     opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
 
             CreateMap<CreditCardBrand, CreditCardBrandDto>();
+            CreateMap<ProductManufacturer, ProductManufacturerDto>();
+            CreateMap<Product, ProductDto>();
         }
     }
 }

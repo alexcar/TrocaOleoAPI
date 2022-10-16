@@ -2,7 +2,7 @@
 
 namespace Contracts
 {
-    public interface IProductManufacturer
+    public interface IProductManufacturerRepository
     {
         ProductManufacturer? Get(Guid id, bool trackChanges);
         IEnumerable<ProductManufacturer> GetAll(bool trackChanges);

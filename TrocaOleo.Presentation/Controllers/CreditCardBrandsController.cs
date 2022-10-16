@@ -5,11 +5,11 @@ namespace TrocaOleo.Presentation.Controllers
 {
     [Route("api/creditcardbrands")]
     [ApiController]
-    public class CreditCardBrandController : ControllerBase
+    public class CreditCardBrandsController : ControllerBase
     {
         private readonly IServiceManager _service;
 
-        public CreditCardBrandController(IServiceManager service)
+        public CreditCardBrandsController(IServiceManager service)
         {
             _service = service;
         }

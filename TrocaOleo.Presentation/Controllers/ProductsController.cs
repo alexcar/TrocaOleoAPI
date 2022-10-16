@@ -45,6 +45,19 @@ namespace TrocaOleo.Presentation.Controllers
                 new { productManufacturerId, id = productToReturn.Id }, productToReturn);
         }
 
+        [HttpPut("{id:guid}")]
+        public IActionResult UpdateProductForProductManufacturer(Guid productmanufacturerId, Guid id,
+            [FromBody] ProductForUpdateDto product)
+        {
+            if (product is null)
+                return BadRequest("ProductForUpdateDto object is null");
+
+            _service.ProductService.UpdateProductForProductManufacturer(
+                productmanufacturerId, id, product, manufTrackChanges: false, prodTrackChanges: true);
+            
+            return NoContent();
+        }
+
         [HttpDelete("{id:guid}")]
         public IActionResult DeleteProductForProductmanufacturer(Guid productmanufacturerId, Guid id)
         {

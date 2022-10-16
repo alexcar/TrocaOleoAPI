@@ -10,6 +10,8 @@ namespace Service.Contracts
         (IEnumerable<ProductManufacturerDto> productManufactures, string ids) CreateProductManufacturerCollection(
             IEnumerable<ProductManufacturerForCreationDto> productManufacturerCollection);
         ProductManufacturerDto CreateProductManufacturer(ProductManufacturerForCreationDto productManufacturer);
+        void UpdateProductManufacturer(
+            Guid productManufacturerId, ProductManufacturerForUpdateDto productManufacturerForUpdate, bool trackChanges);
         void DeleteProductManufacturer(Guid id, bool trackChanges);
     }
 }

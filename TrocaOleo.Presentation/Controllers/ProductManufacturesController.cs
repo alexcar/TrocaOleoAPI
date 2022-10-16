@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -58,6 +59,18 @@ namespace TrocaOleo.Presentation.Controllers
                 .CreateProductManufacturerCollection(productManufacturerCollection);
 
             return CreatedAtRoute("ProductManufacturerCollection", new { result.ids }, result.productManufactures);
+        }
+
+        [HttpPut("{id:guid}")]
+        public IActionResult UpdateProductManufacturer(
+            Guid id, [FromBody] ProductManufacturerForUpdateDto productManufacturer)
+        {
+            if (productManufacturer is null)
+                return BadRequest("ProductManufacturerForUpdateDto object is null");
+
+            _service.ProductManufacturerService.UpdateProductManufacturer(id, productManufacturer, trackChanges: true);
+
+            return NoContent();
         }
 
         [HttpDelete("{id:guid}")]

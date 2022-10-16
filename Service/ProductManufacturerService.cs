@@ -91,6 +91,18 @@ namespace Service
             return pmToReturn;
         }
 
+        public void UpdateProductManufacturer(
+            Guid productManufacturerId, ProductManufacturerForUpdateDto productManufacturerForUpdate, bool trackChanges)
+        {
+            var pmEntity = _repository.ProductManufacturer.Get(productManufacturerId, trackChanges);
+
+            if (pmEntity is null)
+                throw new ProductManufacturerNotFoundException(productManufacturerId);
+
+            _mapper.Map(productManufacturerForUpdate, pmEntity);
+            _repository.Save();
+        }
+
         public void DeleteProductManufacturer(Guid id, bool trackChanges)
         {
             var pm = _repository.ProductManufacturer.Get(id, trackChanges);

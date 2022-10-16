@@ -70,6 +70,25 @@ namespace Service
             return productToReturn;
         }
 
+        public void UpdateProductForProductManufacturer(
+            Guid productManufacturerId, 
+            Guid id, ProductForUpdateDto productForUpdate, 
+            bool manufTrackChanges, bool prodTrackChanges)
+        {
+            var pm = _repository.ProductManufacturer.Get(productManufacturerId, manufTrackChanges);
+
+            if (pm is null)
+                throw new ProductManufacturerNotFoundException(productManufacturerId);
+
+            var productEntity = _repository.Product.GetById(productManufacturerId, id, prodTrackChanges);
+
+            if (productEntity is null)
+                throw new ProductNotFoundException(id);
+
+            _mapper.Map(productForUpdate, productEntity);
+            _repository.Save();
+        }
+
         public void DeleteProductForProductManufacturer(Guid productManufacturerId, Guid id, bool trackChanges)
         {
             var productManufacturer = _repository.ProductManufacturer.Get(productManufacturerId, trackChanges);

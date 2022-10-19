@@ -4,6 +4,7 @@ using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using System.Runtime.CompilerServices;
 
 namespace Service
 {
@@ -20,9 +21,9 @@ namespace Service
             _mapper = mapper;
         }
 
-        public ProductManufacturerDto? GetById(Guid id, bool trackChanges)
+        public async Task<ProductManufacturerDto?> GetByIdAsync(Guid id, bool trackChanges)
         {
-            var productManufacturer = _repository.ProductManufacturer.Get(id, trackChanges);
+            var productManufacturer = await _repository.ProductManufacturer.GetAsync(id, trackChanges);
 
             if (productManufacturer is null)
                 throw new ProductManufacturerNotFoundException(id);
@@ -32,20 +33,20 @@ namespace Service
             return pmDto;
         }
 
-        public IEnumerable<ProductManufacturerDto> GetAll(bool trackChanges)
+        public async Task<IEnumerable<ProductManufacturerDto>> GetAllAsync(bool trackChanges)
         {
-            var pms = _repository.ProductManufacturer.GetAll(trackChanges);
+            var pms = await _repository.ProductManufacturer.GetAllAsync(trackChanges);
             var pmsDto = _mapper.Map<IEnumerable<ProductManufacturerDto>>(pms);
 
             return pmsDto;
         }
 
-        public IEnumerable<ProductManufacturerDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        public async Task<IEnumerable<ProductManufacturerDto>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
         {
             if (ids is null)
                 throw new IdParametersBadRequestException();
 
-            var pms = _repository.ProductManufacturer.GetByIds(ids, trackChanges);
+            var pms = await _repository.ProductManufacturer.GetByIdsAsync(ids, trackChanges);
 
             if (ids.Count() != pms.Count())
                 throw new CollectionByIdsBadRequestException();
@@ -55,8 +56,8 @@ namespace Service
             return pmsToReturn;
         }
 
-        public (IEnumerable<ProductManufacturerDto> productManufactures, string ids) 
-            CreateProductManufacturerCollection(IEnumerable<ProductManufacturerForCreationDto> productManufacturerCollection)
+        public async Task<(IEnumerable<ProductManufacturerDto> productManufactures, string ids)>
+            CreateProductManufacturerCollectionAsync(IEnumerable<ProductManufacturerForCreationDto> productManufacturerCollection)
         {
             if (productManufacturerCollection is null)
                 throw new CompanyCollectionBadRequest();
@@ -68,7 +69,7 @@ namespace Service
                 _repository.ProductManufacturer.CreateProductManufacturer(productManufacturer);
             }
 
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var productManufacturerToReturn =
                 _mapper.Map<IEnumerable<ProductManufacturerDto>>(productManufacturerEntities);
@@ -77,41 +78,41 @@ namespace Service
             return (productManufactures: productManufacturerToReturn, ids: ids);
         }
 
-        public ProductManufacturerDto CreateProductManufacturer(ProductManufacturerForCreationDto productManufacturer)
+        public async Task<ProductManufacturerDto> CreateProductManufacturerAsync(ProductManufacturerForCreationDto productManufacturer)
         {
             var pmEntity = _mapper.Map<ProductManufacturer>(productManufacturer);
 
             pmEntity.CreationDate = DateTime.Now;
 
             _repository.ProductManufacturer.CreateProductManufacturer(pmEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var pmToReturn = _mapper.Map<ProductManufacturerDto>(pmEntity);
 
             return pmToReturn;
         }
 
-        public void UpdateProductManufacturer(
+        public async Task UpdateProductManufacturerAsync(
             Guid productManufacturerId, ProductManufacturerForUpdateDto productManufacturerForUpdate, bool trackChanges)
         {
-            var pmEntity = _repository.ProductManufacturer.Get(productManufacturerId, trackChanges);
+            var pmEntity = _repository.ProductManufacturer.GetAsync(productManufacturerId, trackChanges);
 
             if (pmEntity is null)
                 throw new ProductManufacturerNotFoundException(productManufacturerId);
 
-            _mapper.Map(productManufacturerForUpdate, pmEntity);
-            _repository.Save();
+            await _mapper.Map(productManufacturerForUpdate, pmEntity);
+            await _repository.SaveAsync();
         }
 
-        public void DeleteProductManufacturer(Guid id, bool trackChanges)
+        public async Task DeleteProductManufacturerAsync(Guid id, bool trackChanges)
         {
-            var pm = _repository.ProductManufacturer.Get(id, trackChanges);
+            var pm = await _repository.ProductManufacturer.GetAsync(id, trackChanges);
 
             if (pm is null)
                 throw new ProductManufacturerNotFoundException(id);
 
             _repository.ProductManufacturer.DeleteProductManufacturer(pm);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
     }
 }

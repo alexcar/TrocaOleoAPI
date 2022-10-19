@@ -15,17 +15,17 @@ namespace TrocaOleo.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public IActionResult GetCreditCardBrand(Guid id)
+        public async Task<IActionResult> GetCreditCardBrand(Guid id)
         {
-            var creditCardBrand = _service.CreditCardBrandService.Get(id, trackChanges: false);
+            var creditCardBrand = await _service.CreditCardBrandService.GetAsync(id, trackChanges: false);
 
             return Ok(creditCardBrand);
         }
 
         [HttpGet]
-        public IActionResult GetCreditCardBrands()
+        public async Task<IActionResult> GetCreditCardBrands()
         {
-            var creditCardbrands = _service.CreditCardBrandService.GetAll(trackChanges: false);
+            var creditCardbrands = await _service.CreditCardBrandService.GetAllAsync(trackChanges: false);
 
             return Ok(creditCardbrands);
         }

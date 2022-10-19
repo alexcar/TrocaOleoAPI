@@ -22,9 +22,9 @@ namespace Service
             _mapper = mapper;
         }
 
-        public CreditCardBrandDto? Get(Guid id, bool trackChanges)
+        public async Task<CreditCardBrandDto?> GetAsync(Guid id, bool trackChanges)
         {
-            var creditCardBrand = _repository.CreditCardBrand.Get(id, trackChanges);
+            var creditCardBrand = await _repository.CreditCardBrand.GetAsync(id, trackChanges);
 
             if (creditCardBrand is null)
                 throw new CreditCardBrandNotFoundException(id);
@@ -34,9 +34,9 @@ namespace Service
             return creditCardBrandDto;
         }
 
-        public IEnumerable<CreditCardBrandDto> GetAll(bool trackChanges)
+        public async Task<IEnumerable<CreditCardBrandDto>> GetAllAsync(bool trackChanges)
         {
-            var creditCardBrands = _repository.CreditCardBrand.GetAll(trackChanges);
+            var creditCardBrands = await _repository.CreditCardBrand.GetAllAsync(trackChanges);
             var creditCardBrandsDto = _mapper.Map<IEnumerable<CreditCardBrandDto>>(creditCardBrands);
 
             return creditCardBrandsDto;

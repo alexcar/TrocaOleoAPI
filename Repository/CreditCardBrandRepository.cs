@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -9,12 +10,12 @@ namespace Repository
         {
         }
 
-        public CreditCardBrand? Get(Guid id, bool trackChanges) =>
-            FindByCondition(c => c.Id.Equals(id), trackChanges).SingleOrDefault();
+        public async Task<CreditCardBrand?> GetAsync(Guid id, bool trackChanges) =>
+            await FindByCondition(c => c.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
 
-        public IEnumerable<CreditCardBrand> GetAll(bool trackChanges) =>
-            FindAll(trackChanges)
-            .OrderBy(c => c.Name).ToList();
+        public async Task<IEnumerable<CreditCardBrand>> GetAllAsync(bool trackChanges) =>
+            await FindAll(trackChanges)
+            .OrderBy(c => c.Name).ToListAsync();
         
     }
 }

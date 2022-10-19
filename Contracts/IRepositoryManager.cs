@@ -7,6 +7,6 @@
         ICreditCardBrandRepository CreditCardBrand { get; }
         IProductManufacturerRepository ProductManufacturer { get; }
         IProductRepository Product { get; }
-        void Save();
+        Task SaveAsync();
     }
 }

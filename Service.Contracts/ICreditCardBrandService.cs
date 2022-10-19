@@ -5,7 +5,7 @@ namespace Service.Contracts
 {
     public interface ICreditCardBrandService
     {
-        IEnumerable<CreditCardBrandDto> GetAll(bool trackChanges);
-        CreditCardBrandDto? Get(Guid id, bool trackChanges);
+        Task<IEnumerable<CreditCardBrandDto>> GetAllAsync(bool trackChanges);
+        Task<CreditCardBrandDto?> GetAsync(Guid id, bool trackChanges);
     }
 }

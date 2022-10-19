@@ -38,6 +38,6 @@ namespace Repository
 
         public IProductRepository Product => _productRepository.Value;
 
-        public void Save() => _repositoryContext.SaveChanges();
+        public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }
 }

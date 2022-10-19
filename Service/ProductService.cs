@@ -4,6 +4,7 @@ using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 using System.ComponentModel;
 
 namespace Service
@@ -21,26 +22,21 @@ namespace Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllAsync(Guid productManufacturerId, bool trackChanges)
+        public async Task<(IEnumerable<ProductDto> products, MetaData metaData)> GetAllAsync(
+            Guid productManufacturerId,
+            ProductParameters productParameters,
+            bool trackChanges)
         {
-            var productManfacturer = await _repository.ProductManufacturer.GetAsync(productManufacturerId, trackChanges);
+            await GetProductManufacturerAndCheckIfExists(productManufacturerId, trackChanges);            
+            var productsWithMetaData = await _repository.Product.GetAllAsync(productManufacturerId, productParameters, trackChanges);
+            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(productsWithMetaData);
 
-            if (productManfacturer is null)
-                throw new ProductManufacturerNotFoundException(productManufacturerId);
-            
-            var products = await _repository.Product.GetAllAsync(productManufacturerId, trackChanges);
-            var productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
-
-            return productsDto;
+            return (products: productsDto, metaData: productsWithMetaData.MetaData);
         }
 
         public async Task<ProductDto?> GetByIdAsync(Guid productManufacturerId, Guid id, bool trackChanges)
         {
-            var productManfacturer = await _repository.ProductManufacturer.GetAsync(productManufacturerId, trackChanges);
-
-            if (productManfacturer is null)
-                throw new ProductManufacturerNotFoundException(productManufacturerId);
-
+            await GetProductManufacturerAndCheckIfExists(productManufacturerId, trackChanges);
             var product = await _repository.Product.GetByIdAsync(productManufacturerId, id, trackChanges);
 
             if (product is null)

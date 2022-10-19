@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
+using System.Text.Json;
 
 namespace TrocaOleo.Presentation.Controllers
 {
@@ -16,11 +18,15 @@ namespace TrocaOleo.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductsForManufacturer(Guid productManufacturerId)
+        public async Task<IActionResult> GetProductsForManufacturer(
+            Guid productManufacturerId, [FromQuery] ProductParameters productParameters)
         {
-            var products = await _service.ProductService.GetAllAsync(productManufacturerId, trackChanges: false);
+            var pagedResult = await _service.ProductService.GetAllAsync(
+                productManufacturerId, productParameters, trackChanges: false);
 
-            return Ok(products);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+
+            return Ok(pagedResult.products);
         }
 
         [HttpGet("{id:guid}", Name = "GetProductForManufacturer")]

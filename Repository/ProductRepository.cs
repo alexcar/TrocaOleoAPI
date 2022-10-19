@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Shared.RequestFeatures;
 
 namespace Repository
 {
@@ -15,9 +16,24 @@ namespace Repository
                 p.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
 
 
-        public async Task<IEnumerable<Product>> GetAllAsync(Guid productManufacturerId, bool trackChanges) =>
-            await FindByCondition(pm => pm.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
-                .OrderBy(p => p.Name).ToListAsync();
+        public async Task<PagedList<Product>> GetAllAsync(
+            Guid productManufacturerId, 
+            ProductParameters productParameters,
+            bool trackChanges)
+        {
+            var products = await FindByCondition(pm => pm.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
+                .OrderBy(p => p.Name)
+                .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
+                .Take(productParameters.PageSize)
+                .ToListAsync();
+
+            var count = await 
+                FindByCondition(e => e.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
+                    .CountAsync();
+
+            return new PagedList<Product>(products, count, productParameters.PageNumber, productParameters.PageSize);
+        }
+            
 
         public void CreateProductForProductManufacturer(Guid productManufacturerId, Product product)
         {

@@ -4,6 +4,7 @@ using Repository;
 using Service.Contracts;
 using Service;
 using Microsoft.EntityFrameworkCore;
+using TrocaOleo.Presentation.ActionFilters;
 
 namespace TrocaoOleoAPI.Extensions
 {
@@ -41,5 +42,10 @@ namespace TrocaoOleoAPI.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+
+        public static void ConfigureValidationFilterAttribute(this IServiceCollection services)
+        {
+            services.AddScoped<ValidationFilterAttribute>();
+        }
     }
 }

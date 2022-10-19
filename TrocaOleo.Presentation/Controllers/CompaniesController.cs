@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using TrocaOleo.Presentation.ActionFilters;
 using TrocaOleo.Presentation.ModelBinders;
 
 namespace TrocaOleo.Presentation.Controllers
@@ -42,10 +43,14 @@ namespace TrocaOleo.Presentation.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
         {
-            if (company is null)
-                return BadRequest("CompanyForCreationDto object is null");
+            //if (company is null)
+            //    return BadRequest("CompanyForCreationDto object is null");
+
+            //if (!ModelState.IsValid)
+            //    return UnprocessableEntity(ModelState);
 
             var createdCompany = await _service.CompanyService.CreateCompanyAsync(company);
 
@@ -53,6 +58,7 @@ namespace TrocaOleo.Presentation.Controllers
         }
 
         [HttpPost("collection")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companyCollection)
         {
             var result = await _service.CompanyService.CreateCompanyCollectionAsync(companyCollection);

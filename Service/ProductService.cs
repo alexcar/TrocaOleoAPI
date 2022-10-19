@@ -4,6 +4,7 @@ using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using System.ComponentModel;
 
 namespace Service
 {
@@ -53,11 +54,7 @@ namespace Service
         public async Task<ProductDto> CreateProductForProductManufacturerAsync(
             Guid productManufacturerId, ProductForCreationDto productForCreation, bool trackChanges)
         {
-            var productManufacturer = await _repository.ProductManufacturer.GetAsync(productManufacturerId, trackChanges);
-
-            if (productManufacturer is null)
-                throw new ProductManufacturerNotFoundException(productManufacturerId);
-
+            await GetProductManufacturerAndCheckIfExists(productManufacturerId, trackChanges);
             var productEntity = _mapper.Map<Product>(productForCreation);
 
             productEntity.CreationDate = DateTime.Now;
@@ -75,15 +72,8 @@ namespace Service
             Guid id, ProductForUpdateDto productForUpdate, 
             bool manufTrackChanges, bool prodTrackChanges)
         {
-            var pm = await _repository.ProductManufacturer.GetAsync(productManufacturerId, manufTrackChanges);
-
-            if (pm is null)
-                throw new ProductManufacturerNotFoundException(productManufacturerId);
-
-            var productEntity = await _repository.Product.GetByIdAsync(productManufacturerId, id, prodTrackChanges);
-
-            if (productEntity is null)
-                throw new ProductNotFoundException(id);
+            await GetProductManufacturerAndCheckIfExists(productManufacturerId, manufTrackChanges);
+            var productEntity = await GetProductForManufacturterAndCheckIfExists(productManufacturerId, id, prodTrackChanges);
 
             _mapper.Map(productForUpdate, productEntity);
             await _repository.SaveAsync();
@@ -91,18 +81,31 @@ namespace Service
 
         public async Task DeleteProductForProductManufacturerAsync(Guid productManufacturerId, Guid id, bool trackChanges)
         {
-            var productManufacturer = await _repository.ProductManufacturer.GetAsync(productManufacturerId, trackChanges);
-
-            if (productManufacturer is null)
-                throw new ProductManufacturerNotFoundException(productManufacturerId);
-
-            var productForProductManufacturer = await _repository.Product.GetByIdAsync(productManufacturerId, id, trackChanges);
-
-            if (productForProductManufacturer is null)
-                throw new ProductNotFoundException(id);
+            await GetProductManufacturerAndCheckIfExists(productManufacturerId, trackChanges);
+            var productForProductManufacturer = await GetProductForManufacturterAndCheckIfExists(productManufacturerId, id, trackChanges);
 
             _repository.Product.DeleteProduct(productForProductManufacturer);
             await _repository.SaveAsync();
+        }
+
+        private async Task<ProductManufacturer> GetProductManufacturerAndCheckIfExists(Guid id, bool trackChanges)
+        {
+            var pm = await _repository.ProductManufacturer.GetAsync(id, trackChanges);
+
+            if (pm is null)
+                throw new ProductManufacturerNotFoundException(id);
+
+            return pm;
+        }
+
+        private async Task<Product> GetProductForManufacturterAndCheckIfExists(Guid productManufacturerId, Guid productId, bool trackChanges)
+        {
+            var productForProductManufacturer = await _repository.Product.GetByIdAsync(productManufacturerId, productId, trackChanges);
+
+            if (productForProductManufacturer is null)
+                throw new ProductNotFoundException(productId);
+
+            return productForProductManufacturer;
         }
     }
 }

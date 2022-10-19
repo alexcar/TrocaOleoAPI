@@ -95,24 +95,28 @@ namespace Service
         public async Task UpdateProductManufacturerAsync(
             Guid productManufacturerId, ProductManufacturerForUpdateDto productManufacturerForUpdate, bool trackChanges)
         {
-            var pmEntity = _repository.ProductManufacturer.GetAsync(productManufacturerId, trackChanges);
+            var pmEntity = await GetProductManufacturerAndCheckIfExists(productManufacturerId, trackChanges);
 
-            if (pmEntity is null)
-                throw new ProductManufacturerNotFoundException(productManufacturerId);
-
-            await _mapper.Map(productManufacturerForUpdate, pmEntity);
+            _mapper.Map(productManufacturerForUpdate, pmEntity);
             await _repository.SaveAsync();
         }
 
         public async Task DeleteProductManufacturerAsync(Guid id, bool trackChanges)
+        {
+            var pm = await GetProductManufacturerAndCheckIfExists(id, trackChanges);
+
+            _repository.ProductManufacturer.DeleteProductManufacturer(pm);
+            await _repository.SaveAsync();
+        }
+
+        private async Task<ProductManufacturer> GetProductManufacturerAndCheckIfExists(Guid id, bool trackChanges)
         {
             var pm = await _repository.ProductManufacturer.GetAsync(id, trackChanges);
 
             if (pm is null)
                 throw new ProductManufacturerNotFoundException(id);
 
-            _repository.ProductManufacturer.DeleteProductManufacturer(pm);
-            await _repository.SaveAsync();
+            return pm;
         }
     }
 }

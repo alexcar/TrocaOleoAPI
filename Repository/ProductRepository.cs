@@ -44,7 +44,7 @@ namespace Repository
                 p => p.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
                 .FilterProducts(productParameters.MinPrice, productParameters.MaxPrice)
                 .Search(productParameters.SearchTerm)
-                .OrderBy(p => p.Name)
+                .Sort(productParameters.OrderBy)
                 .ToListAsync();
 
             return PagedList<Product>

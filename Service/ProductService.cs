@@ -27,6 +27,9 @@ namespace Service
             ProductParameters productParameters,
             bool trackChanges)
         {
+            if (!productParameters.ValidPriceRange())
+                throw new MaxPriceRangeBadRequestException();
+            
             await GetProductManufacturerAndCheckIfExists(productManufacturerId, trackChanges);            
             var productsWithMetaData = await _repository.Product.GetAllAsync(productManufacturerId, productParameters, trackChanges);
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(productsWithMetaData);

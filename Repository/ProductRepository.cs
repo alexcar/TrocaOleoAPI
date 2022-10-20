@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Extensions;
 using Shared.RequestFeatures;
 
 namespace Repository
@@ -21,17 +22,33 @@ namespace Repository
             ProductParameters productParameters,
             bool trackChanges)
         {
-            var products = await FindByCondition(pm => pm.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
+            //var products = await 
+            //    FindByCondition(product =>
+            //        product.ProductManufacturerId.Equals(productManufacturerId) &&
+            //        (
+            //            product.Price >= productParameters.MinPrice && 
+            //            product.Price <= productParameters.MaxPrice
+            //        ), trackChanges)
+            //    .OrderBy(p => p.Name)
+            //    .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
+            //    .Take(productParameters.PageSize)
+            //    .ToListAsync();
+
+            //var count = await 
+            //    FindByCondition(e => e.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
+            //        .CountAsync();
+
+            //return new PagedList<Product>(products, count, productParameters.PageNumber, productParameters.PageSize);
+
+            var products = await FindByCondition(
+                p => p.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
+                .FilterProducts(productParameters.MinPrice, productParameters.MaxPrice)
+                .Search(productParameters.SearchTerm)
                 .OrderBy(p => p.Name)
-                .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)
-                .Take(productParameters.PageSize)
                 .ToListAsync();
 
-            var count = await 
-                FindByCondition(e => e.ProductManufacturerId.Equals(productManufacturerId), trackChanges)
-                    .CountAsync();
-
-            return new PagedList<Product>(products, count, productParameters.PageNumber, productParameters.PageSize);
+            return PagedList<Product>
+                .ToPagedList(products, productParameters.PageNumber, productParameters.PageSize);
         }
             
 

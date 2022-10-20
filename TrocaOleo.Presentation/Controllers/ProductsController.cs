@@ -17,6 +17,14 @@ namespace TrocaOleo.Presentation.Controllers
             _service = service;
         }
 
+        [HttpGet("{id:guid}", Name = "GetProductForManufacturer")]
+        public async Task<IActionResult> GetProductForManufacturer(Guid productManufacturerId, Guid id)
+        {
+            var productDto = await _service.ProductService.GetByIdAsync(productManufacturerId, id, trackChanges: false);
+
+            return Ok(productDto);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetProductsForManufacturer(
             Guid productManufacturerId, [FromQuery] ProductParameters productParameters)
@@ -27,14 +35,6 @@ namespace TrocaOleo.Presentation.Controllers
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
 
             return Ok(pagedResult.products);
-        }
-
-        [HttpGet("{id:guid}", Name = "GetProductForManufacturer")]
-        public async Task<IActionResult> GetProductForManufacturer(Guid productManufacturerId, Guid id)
-        {
-            var productDto = await _service.ProductService.GetByIdAsync(productManufacturerId, id, trackChanges: false);
-
-            return Ok(productDto);
         }
 
         [HttpPost]

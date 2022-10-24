@@ -9,6 +9,7 @@ namespace TrocaOleo.Presentation.Controllers
 {
     [Route("api/companies")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class CompaniesController : ControllerBase
     {
         private readonly IServiceManager _service;
@@ -18,6 +19,10 @@ namespace TrocaOleo.Presentation.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Get the list of all Companies
+        /// </summary>
+        /// <returns>The companies list</returns>
         [HttpGet]
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()

@@ -7,5 +7,6 @@
         ICreditCardBrandService CreditCardBrandService { get; }
         IProductManufacturerService ProductManufacturerService { get; }
         IProductService ProductService { get; }
+        IAuthenticationService AuthenticationService { get; }
     }
 }

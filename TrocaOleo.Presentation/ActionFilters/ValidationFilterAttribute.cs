@@ -30,7 +30,7 @@ namespace TrocaOleo.Presentation.ActionFilters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }

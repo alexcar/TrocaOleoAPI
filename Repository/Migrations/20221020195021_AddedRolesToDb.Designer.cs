@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,10 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20221020195021_AddedRolesToDb")]
+    partial class AddedRolesToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +152,7 @@ namespace Repository.Migrations
                             Contact = "José da Silva",
                             Country = "Brasil",
                             County = "Santa isabel",
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 375, DateTimeKind.Local).AddTicks(7510),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(5393),
                             Ddd = "011",
                             Email = "contato@zegracha.com",
                             Name = "Zé Gracha Ltda",
@@ -192,7 +194,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("c32b3780-5c90-4990-896f-502a478f9a22"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 375, DateTimeKind.Local).AddTicks(8687),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(6504),
                             Name = "Mastercard",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         },
@@ -200,7 +202,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("9f780c05-7252-485d-8cf6-9279272e1086"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 375, DateTimeKind.Local).AddTicks(8693),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(6509),
                             Name = "Visa",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         });
@@ -235,7 +237,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("884bc531-f0e6-463b-aa9f-f0ac9d8b521a"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(709),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(8813),
                             Name = "Ar condicionado",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         },
@@ -243,7 +245,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("3b90f7bc-2bb1-455f-a46e-2fdffbdd0167"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(715),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(8821),
                             Name = "Sala de espera",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         },
@@ -251,7 +253,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("05dd35ae-c60d-4349-98b1-ba990fed57d5"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(718),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(8824),
                             Name = "Área para fumante",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         });
@@ -300,7 +302,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("4fb540e6-7b18-4904-bef6-82323c423dc3"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(4184),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 689, DateTimeKind.Local).AddTicks(3930),
                             Description = "Óleo Lubrax 20w50",
                             Name = "Óleo Motor 20w50 Essencial SL",
                             Price = 62.22m,
@@ -311,7 +313,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("47ee3977-ddb6-4d10-aa33-2f5d08d521eb"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(4195),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 689, DateTimeKind.Local).AddTicks(3943),
                             Description = "Óleo Lubrax 20w50",
                             Name = "Óleo Lubrax 20w50 SL 3lt",
                             Price = 149.85m,
@@ -322,7 +324,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("a892244e-1ec6-4349-b11c-94c85655a820"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(4198),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 689, DateTimeKind.Local).AddTicks(3957),
                             Description = "Óleo Lubrax 20w50",
                             Name = "Óleo Do Motor Lubrax Essencial",
                             Price = 39.99m,
@@ -360,7 +362,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("45a0fbef-bd12-4fc5-ae7a-4f99a8e8f34d"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(1684),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(9618),
                             Name = "Lubrax Petrobras",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         },
@@ -368,7 +370,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("d6f0bb03-97c9-41a2-a20c-19e8fc788d72"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(1687),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(9640),
                             Name = "Mobil Industrial",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         },
@@ -376,7 +378,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("07ca7d2c-08f0-4848-b760-03aac0ad29f4"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(1690),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(9646),
                             Name = "Shell",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         },
@@ -384,7 +386,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("f7becb0d-770c-4fc2-a6e2-c7eb75069af4"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(1696),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 688, DateTimeKind.Local).AddTicks(9649),
                             Name = "Ipiranga",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         });
@@ -419,7 +421,7 @@ namespace Repository.Migrations
                         {
                             Id = new Guid("3e3d9cbd-470d-493b-9fed-fafed765b47a"),
                             Active = true,
-                            CreationDate = new DateTime(2022, 10, 24, 11, 22, 35, 376, DateTimeKind.Local).AddTicks(4945),
+                            CreationDate = new DateTime(2022, 10, 20, 16, 50, 20, 689, DateTimeKind.Local).AddTicks(5434),
                             Name = "Troca de Óleo",
                             UserUpdate = new Guid("5cf7137c-ae20-497d-831d-8df824697c8a")
                         });
@@ -473,12 +475,6 @@ namespace Repository.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -531,15 +527,15 @@ namespace Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4ac8240a-8498-4869-bc86-60e5dc982d27",
-                            ConcurrencyStamp = "61fa2780-49de-437d-8ec1-7a6fdd498cca",
+                            Id = "08a07250-e34e-4684-9dc1-e7bab51e88ce",
+                            ConcurrencyStamp = "c9274499-9810-4a72-a3f8-eff9418f8bf6",
                             Name = "manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "562419f5-eed1-473b-bcc1-9f2dbab182b4",
-                            ConcurrencyStamp = "62ef179f-8d9d-42f1-a69d-ef10c6a0efd1",
+                            Id = "9d754397-43de-47eb-879a-5a93403430b7",
+                            ConcurrencyStamp = "e9144f21-560c-4f84-87f2-87a983194f6a",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

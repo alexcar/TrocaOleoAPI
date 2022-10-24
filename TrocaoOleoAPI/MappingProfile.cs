@@ -21,6 +21,7 @@ namespace TrocaoOleoAPI
             CreateMap<ProductManufacturerForUpdateDto, ProductManufacturer>();
             CreateMap<ProductForCreationDto, Product>();
             CreateMap<ProductForUpdateDto, Product>();
+            CreateMap<UserForRegistrationDto, User>();
         }
     }
 }

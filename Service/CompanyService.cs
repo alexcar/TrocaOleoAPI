@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.Exceptions;
 using Entities.Models;
+using Entities.Responses;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -95,6 +96,25 @@ namespace Service
             var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
 
             return companyToReturn;
+        }
+
+        public ApiBaseResponse GetAllCompanies(bool trackChanges)
+        {
+            var companies = _repository.Company.GetAllCompaniesAsync(trackChanges).Result;
+            var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
+
+            return new ApiOkResponse<IEnumerable<CompanyDto>>(companiesDto);
+        }
+
+        public ApiBaseResponse GetCompany(Guid id, bool trackChanges)
+        {
+            var company = _repository.Company.GetCompanyAsync(id, trackChanges);
+
+            if (company is null)
+                return new Company1NotFoundResponse(id);
+
+            var companyDto = _mapper.Map<CompanyDto>(company);
+            return new ApiOkResponse<CompanyDto>(companyDto);
         }
     }
 }

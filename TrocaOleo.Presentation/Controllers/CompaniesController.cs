@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Entities.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using TrocaOleo.Presentation.ActionFilters;
+using TrocaOleo.Presentation.Extensions;
 using TrocaOleo.Presentation.ModelBinders;
 
 namespace TrocaOleo.Presentation.Controllers
@@ -10,7 +12,7 @@ namespace TrocaOleo.Presentation.Controllers
     [Route("api/companies")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v1")]
-    public class CompaniesController : ControllerBase
+    public class CompaniesController : ControllerBase //ApiControllerBase
     {
         private readonly IServiceManager _service;
 
@@ -24,7 +26,7 @@ namespace TrocaOleo.Presentation.Controllers
         /// </summary>
         /// <returns>The companies list</returns>
         [HttpGet]
-        [Authorize(Roles = "Manager")]
+        // [Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
         {
             var companies = await _service
@@ -72,5 +74,27 @@ namespace TrocaOleo.Presentation.Controllers
 
             return CreatedAtRoute("CompanyCollection", new { result.ids }, result.companies);
         }
+
+        //[HttpGet("getcompanies2")]
+        //public IActionResult GetCompanies2()
+        //{
+        //    var baseResult = _service.CompanyService.GetAllCompanies(trackChanges: false);
+        //    var companies = baseResult.GetResult<IEnumerable<CompanyDto>>();
+
+        //    return Ok(companies);
+        //}
+
+        //[HttpGet("{id:guid}", Name = "getcompany2")]
+        //public IActionResult GetCompany2(Guid id)
+        //{
+        //    var baseResult = _service.CompanyService.GetCompany(id, trackChanges: false);
+
+        //    if (!baseResult.Success)
+        //        return ProcessError(baseResult);
+
+        //    var company = baseResult.GetResult<CompanyDto>();
+
+        //    return Ok(company);
+        //}
     }
 }
